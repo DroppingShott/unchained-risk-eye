@@ -22,8 +22,8 @@ const Header = () => {
     <header 
       className={`sticky top-0 z-50 transition-all duration-300 ${
         isScrolled 
-          ? 'bg-unchained-navy/95 backdrop-blur-sm py-2 shadow-lg' 
-          : 'bg-unchained-navy py-4'
+          ? 'bg-unchained-navy/80 backdrop-blur-sm py-2 shadow-lg' 
+          : 'bg-unchained-navy/90 py-4'
       }`}
     >
       <div className="container mx-auto px-6 flex justify-between items-center">
@@ -56,7 +56,7 @@ const Header = () => {
 
         {/* Mobile Navigation */}
         {isMenuOpen && (
-          <div className="absolute top-full left-0 right-0 bg-unchained-navy shadow-lg md:hidden animate-fade-in">
+          <div className="absolute top-full left-0 right-0 bg-unchained-navy/90 shadow-lg md:hidden animate-fade-in">
             <div className="flex flex-col p-4 space-y-3">
               <a href="/#features" className="text-white py-2 hover:bg-blue-800 px-4 rounded" onClick={() => setIsMenuOpen(false)}>Features</a>
               <a href="/#how-it-works" className="text-white py-2 hover:bg-blue-800 px-4 rounded" onClick={() => setIsMenuOpen(false)}>How It Works</a>

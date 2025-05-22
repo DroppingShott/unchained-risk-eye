@@ -23,7 +23,7 @@ const ProcessFlow = () => {
             {/* Row 1: Input Sources */}
             <div className="flex justify-center mb-12 relative animate-fade-in">
               <div className="flow-node shadow-lg transform transition-all duration-500 hover:scale-105 hover:shadow-xl">
-                <div className="absolute -top-5 left-1/2 transform -translate-x-1/2 bg-unchained-navy text-white p-3 rounded-full shadow-lg border-4 border-white">
+                <div className="absolute -top-5 left-1/2 transform -translate-x-1/2 bg-unchained-navy text-white p-3 rounded-full shadow-lg border-4 border-white z-10">
                   <User className="h-6 w-6" />
                 </div>
                 <h3 className="mt-6 font-semibold text-unchained-navy">Data Sources</h3>
@@ -48,7 +48,7 @@ const ProcessFlow = () => {
               <div className="hidden md:block absolute top-0 bottom-0 right-1/6 w-0.5 bg-gray-300"></div>
               
               <div className="flow-node shadow-lg transform transition-all duration-500 hover:scale-105 hover:shadow-xl animate-fade-in" style={{animationDelay: '0.1s'}}>
-                <div className="absolute -top-5 left-1/2 transform -translate-x-1/2 bg-unchained-lightblue text-white p-3 rounded-full shadow-lg border-4 border-white">
+                <div className="absolute -top-5 left-1/2 transform -translate-x-1/2 bg-unchained-lightblue text-white p-3 rounded-full shadow-lg border-4 border-white z-10">
                   <Filter className="h-6 w-6" />
                 </div>
                 <h3 className="mt-6 font-semibold text-unchained-navy">Initial Filtering</h3>
@@ -58,7 +58,7 @@ const ProcessFlow = () => {
               </div>
               
               <div className="flow-node shadow-lg transform transition-all duration-500 hover:scale-105 hover:shadow-xl animate-fade-in" style={{animationDelay: '0.2s'}}>
-                <div className="absolute -top-5 left-1/2 transform -translate-x-1/2 bg-unchained-lightblue text-white p-3 rounded-full shadow-lg border-4 border-white">
+                <div className="absolute -top-5 left-1/2 transform -translate-x-1/2 bg-unchained-lightblue text-white p-3 rounded-full shadow-lg border-4 border-white z-10">
                   <Database className="h-6 w-6" />
                 </div>
                 <h3 className="mt-6 font-semibold text-unchained-navy">Dataset Creation</h3>
@@ -68,7 +68,7 @@ const ProcessFlow = () => {
               </div>
               
               <div className="flow-node shadow-lg transform transition-all duration-500 hover:scale-105 hover:shadow-xl animate-fade-in" style={{animationDelay: '0.3s'}}>
-                <div className="absolute -top-5 left-1/2 transform -translate-x-1/2 bg-unchained-red text-white p-3 rounded-full shadow-lg border-4 border-white">
+                <div className="absolute -top-5 left-1/2 transform -translate-x-1/2 bg-unchained-red text-white p-3 rounded-full shadow-lg border-4 border-white z-10">
                   <Activity className="h-6 w-6" />
                 </div>
                 <h3 className="mt-6 font-semibold text-unchained-navy">Element Identification</h3>
@@ -93,7 +93,7 @@ const ProcessFlow = () => {
               <div className="hidden md:block absolute top-0 bottom-0 right-1/6 w-0.5 bg-gray-300"></div>
               
               <div className="flow-node shadow-lg transform transition-all duration-500 hover:scale-105 hover:shadow-xl animate-fade-in" style={{animationDelay: '0.4s'}}>
-                <div className="absolute -top-5 left-1/2 transform -translate-x-1/2 bg-unchained-navy text-white p-3 rounded-full shadow-lg border-4 border-white">
+                <div className="absolute -top-5 left-1/2 transform -translate-x-1/2 bg-unchained-navy text-white p-3 rounded-full shadow-lg border-4 border-white z-10">
                   <Database className="h-6 w-6" />
                 </div>
                 <h3 className="mt-6 font-semibold text-unchained-navy">UnChained DB</h3>
@@ -103,7 +103,7 @@ const ProcessFlow = () => {
               </div>
               
               <div className="flow-node shadow-lg transform transition-all duration-500 hover:scale-105 hover:shadow-xl animate-fade-in" style={{animationDelay: '0.5s'}}>
-                <div className="absolute -top-5 left-1/2 transform -translate-x-1/2 bg-unchained-navy text-white p-3 rounded-full shadow-lg border-4 border-white">
+                <div className="absolute -top-5 left-1/2 transform -translate-x-1/2 bg-unchained-navy text-white p-3 rounded-full shadow-lg border-4 border-white z-10">
                   <Shield className="h-6 w-6" />
                 </div>
                 <h3 className="mt-6 font-semibold text-unchained-navy">AI Processing</h3>
@@ -113,7 +113,7 @@ const ProcessFlow = () => {
               </div>
               
               <div className="flow-node shadow-lg transform transition-all duration-500 hover:scale-105 hover:shadow-xl animate-fade-in" style={{animationDelay: '0.6s'}}>
-                <div className="absolute -top-5 left-1/2 transform -translate-x-1/2 bg-unchained-navy text-white p-3 rounded-full shadow-lg border-4 border-white">
+                <div className="absolute -top-5 left-1/2 transform -translate-x-1/2 bg-unchained-navy text-white p-3 rounded-full shadow-lg border-4 border-white z-10">
                   <Activity className="h-6 w-6" />
                 </div>
                 <h3 className="mt-6 font-semibold text-unchained-navy">Blockchain Scan</h3>
@@ -138,7 +138,7 @@ const ProcessFlow = () => {
               <div className="hidden md:block absolute top-0 bottom-0 right-1/6 w-0.5 bg-gray-300"></div>
               
               <div className="flow-node border-red-200 bg-red-50 shadow-lg transform transition-all duration-500 hover:scale-105 hover:shadow-xl animate-fade-in" style={{animationDelay: '0.7s'}}>
-                <div className="absolute -top-5 left-1/2 transform -translate-x-1/2 bg-unchained-red text-white p-3 rounded-full shadow-lg border-4 border-white">
+                <div className="absolute -top-5 left-1/2 transform -translate-x-1/2 bg-unchained-red text-white p-3 rounded-full shadow-lg border-4 border-white z-10">
                   <CircleAlert className="h-6 w-6" />
                 </div>
                 <h3 className="mt-6 font-semibold text-unchained-red">Suspicious</h3>
@@ -148,7 +148,7 @@ const ProcessFlow = () => {
               </div>
               
               <div className="flow-node border-unchained-navy bg-blue-50 shadow-lg transform transition-all duration-500 hover:scale-105 hover:shadow-xl animate-fade-in" style={{animationDelay: '0.8s'}}>
-                <div className="absolute -top-5 left-1/2 transform -translate-x-1/2 bg-unchained-navy text-white p-3 rounded-full shadow-lg border-4 border-white">
+                <div className="absolute -top-5 left-1/2 transform -translate-x-1/2 bg-unchained-navy text-white p-3 rounded-full shadow-lg border-4 border-white z-10">
                   <User className="h-6 w-6" />
                 </div>
                 <h3 className="mt-6 font-semibold text-unchained-navy">Human Verification</h3>
@@ -158,7 +158,7 @@ const ProcessFlow = () => {
               </div>
               
               <div className="flow-node border-green-200 bg-green-50 shadow-lg transform transition-all duration-500 hover:scale-105 hover:shadow-xl animate-fade-in" style={{animationDelay: '0.9s'}}>
-                <div className="absolute -top-5 left-1/2 transform -translate-x-1/2 bg-green-600 text-white p-3 rounded-full shadow-lg border-4 border-white">
+                <div className="absolute -top-5 left-1/2 transform -translate-x-1/2 bg-green-600 text-white p-3 rounded-full shadow-lg border-4 border-white z-10">
                   <CircleCheck className="h-6 w-6" />
                 </div>
                 <h3 className="mt-6 font-semibold text-green-600">Unsuspicious</h3>
@@ -177,7 +177,7 @@ const ProcessFlow = () => {
             {/* Row 5: Final Action */}
             <div className="flex justify-center">
               <div className="flow-node border-unchained-navy shadow-lg transform transition-all duration-500 hover:scale-105 hover:shadow-xl animate-fade-in" style={{animationDelay: '1s'}}>
-                <div className="absolute -top-5 left-1/2 transform -translate-x-1/2 bg-unchained-navy text-white p-3 rounded-full shadow-lg border-4 border-white">
+                <div className="absolute -top-5 left-1/2 transform -translate-x-1/2 bg-unchained-navy text-white p-3 rounded-full shadow-lg border-4 border-white z-10">
                   <Activity className="h-6 w-6" />
                 </div>
                 <h3 className="mt-6 font-semibold text-unchained-navy">Action Taken</h3>
