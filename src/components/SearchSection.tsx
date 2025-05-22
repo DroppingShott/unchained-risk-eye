@@ -1,32 +1,64 @@
 
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Search } from 'lucide-react';
+import { Search, AlertCircle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { toast } from "sonner";
 
 type SearchType = 'wallet' | 'transaction' | 'token';
+
+// Validation patterns for different blockchain addresses
+const validationPatterns = {
+  wallet: /^(0x[a-fA-F0-9]{40})$/,
+  transaction: /^(0x[a-fA-F0-9]{64})$/,
+  token: /^(0x[a-fA-F0-9]{40})$/
+};
 
 const SearchSection = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [searchType, setSearchType] = useState<SearchType>('wallet');
+  const [error, setError] = useState('');
   const navigate = useNavigate();
+  
+  const validateInput = (query: string, type: SearchType): boolean => {
+    if (!query.trim()) {
+      setError('Please enter a value to search');
+      return false;
+    }
+    
+    if (!validationPatterns[type].test(query)) {
+      const errorMessages = {
+        wallet: 'Invalid Ethereum wallet address. Must start with 0x followed by 40 hexadecimal characters.',
+        transaction: 'Invalid transaction hash. Must start with 0x followed by 64 hexadecimal characters.',
+        token: 'Invalid token contract address. Must start with 0x followed by 40 hexadecimal characters.'
+      };
+      setError(errorMessages[type]);
+      return false;
+    }
+    
+    setError('');
+    return true;
+  };
   
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!searchQuery.trim()) return;
     
-    // Redirect to analysis page with query parameters
-    navigate(`/analysis?query=${encodeURIComponent(searchQuery)}&type=${searchType}`);
+    if (validateInput(searchQuery, searchType)) {
+      // If validation passes, navigate to analysis page
+      navigate(`/analysis?query=${encodeURIComponent(searchQuery)}&type=${searchType}`);
+    } else {
+      toast.error(error || "Invalid input format");
+    }
   };
   
   const getPlaceholder = () => {
     switch(searchType) {
       case 'wallet':
-        return 'Enter wallet address (e.g., 0x1234...)';
+        return 'Enter wallet address (e.g., 0x1234abcd...)';
       case 'transaction':
-        return 'Enter transaction hash';
+        return 'Enter transaction hash (0x followed by 64 characters)';
       case 'token':
-        return 'Enter token contract address';
+        return 'Enter token contract address (0x...)';
       default:
         return 'Search...';
     }
@@ -81,10 +113,19 @@ const SearchSection = () => {
                 <input
                   type="text"
                   value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
+                  onChange={(e) => {
+                    setSearchQuery(e.target.value);
+                    if (error) setError('');
+                  }}
                   placeholder={getPlaceholder()}
-                  className="search-input pl-12 focus:shadow-lg transition-all duration-300"
+                  className={`search-input pl-12 focus:shadow-lg transition-all duration-300 ${error ? 'border-red-500' : ''}`}
                 />
+                {error && (
+                  <div className="mt-2 text-red-500 text-sm flex items-start">
+                    <AlertCircle className="h-4 w-4 mr-1 mt-0.5 flex-shrink-0" />
+                    <span>{error}</span>
+                  </div>
+                )}
               </div>
               <Button 
                 type="submit"

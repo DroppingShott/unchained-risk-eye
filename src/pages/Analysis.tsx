@@ -1,12 +1,31 @@
 
 import React, { useState, useEffect } from 'react';
 import { useSearchParams, useNavigate } from 'react-router-dom';
-import { CircleCheck, CircleX, CircleAlert } from 'lucide-react';
+import { CircleCheck, CircleX, CircleAlert, ArrowLeft, Shield, Activity, Wallet, Database } from 'lucide-react';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
+import { Button } from '@/components/ui/button';
 
 type SearchType = 'wallet' | 'transaction' | 'token';
 type ResultType = 'safe' | 'suspicious' | 'high-risk' | null;
+
+// Example Ethereum dataset for demo (using Kaggle dataset information)
+const ethDataset = {
+  // Some example suspicious wallets from the dataset
+  suspiciousWallets: [
+    '0x72a5843cc08275c8171e582972aa4fda8c397b2a',
+    '0x94f5fbaa000000000000000000000000000000000',
+    '0xfc2c4d73fcd3c014d71f10e85f229b9ff6a0d0cd',
+    '0x901bb9583b24d97e995513c6778dc6888ab6870e'
+  ],
+  // Some example high-risk wallets from the dataset
+  highRiskWallets: [
+    '0x1da5821544e25c636c1417ba96ade4cf6d2f9b5a',
+    '0x7657ca877fac31d20528b473162e39b6e152fd2e',
+    '0x4df812f6064def1e5e029f1ca858777cc98d2d81',
+    '0x4156d3342d5c385a87d264f90653733592000581'
+  ]
+};
 
 const Analysis = () => {
   const [searchParams] = useSearchParams();
@@ -15,6 +34,7 @@ const Analysis = () => {
   const [result, setResult] = useState<ResultType>(null);
   const [searchType, setSearchType] = useState<SearchType>('wallet');
   const [searchQuery, setSearchQuery] = useState('');
+  const [detailedData, setDetailedData] = useState<any>(null);
   
   useEffect(() => {
     // Get query parameters
@@ -33,12 +53,87 @@ const Analysis = () => {
     setIsLoading(true);
     
     const analyzeData = setTimeout(() => {
-      // Simulate random result for demo purposes
-      // In a real application, this would be an actual API call
-      const outcomes: ResultType[] = ['safe', 'suspicious', 'high-risk'];
-      const randomResult = outcomes[Math.floor(Math.random() * outcomes.length)];
+      // Check against our dataset for wallet addresses
+      const queryLower = query.toLowerCase();
+      let resultValue: ResultType;
+      let details: any = {};
       
-      setResult(randomResult);
+      if (type === 'wallet') {
+        // Check if wallet is in our suspicious or high-risk lists
+        if (ethDataset.highRiskWallets.some(addr => addr.toLowerCase() === queryLower)) {
+          resultValue = 'high-risk';
+          details = {
+            riskScore: Math.floor(Math.random() * 21) + 80, // 80-100
+            transactionCount: Math.floor(Math.random() * 200) + 50,
+            flaggedTransactions: Math.floor(Math.random() * 40) + 10,
+            firstSeen: '2021-06-14',
+            associatedWithPhishing: true,
+            connectedToSanctionedEntities: true,
+            mixerUsage: true,
+            fundsFromDarkMarkets: true
+          };
+        } else if (ethDataset.suspiciousWallets.some(addr => addr.toLowerCase() === queryLower)) {
+          resultValue = 'suspicious';
+          details = {
+            riskScore: Math.floor(Math.random() * 30) + 50, // 50-79
+            transactionCount: Math.floor(Math.random() * 100) + 20,
+            flaggedTransactions: Math.floor(Math.random() * 10) + 2,
+            firstSeen: '2022-03-22',
+            associatedWithPhishing: Math.random() > 0.5,
+            connectedToSanctionedEntities: false,
+            mixerUsage: Math.random() > 0.7,
+            fundsFromDarkMarkets: false
+          };
+        } else {
+          resultValue = 'safe';
+          details = {
+            riskScore: Math.floor(Math.random() * 49) + 1, // 1-49
+            transactionCount: Math.floor(Math.random() * 50) + 1,
+            flaggedTransactions: 0,
+            firstSeen: '2023-01-05',
+            associatedWithPhishing: false,
+            connectedToSanctionedEntities: false,
+            mixerUsage: false,
+            fundsFromDarkMarkets: false
+          };
+        }
+      } else {
+        // For transactions and tokens, generate random results for demo purposes
+        const outcomes: ResultType[] = ['safe', 'suspicious', 'high-risk'];
+        resultValue = outcomes[Math.floor(Math.random() * outcomes.length)];
+        
+        if (resultValue === 'high-risk') {
+          details = {
+            riskScore: Math.floor(Math.random() * 21) + 80,
+            involvedWallets: Math.floor(Math.random() * 5) + 3,
+            flaggedWallets: Math.floor(Math.random() * 3) + 1,
+            transactionDate: '2022-11-09',
+            largeValueTransfer: true,
+            obfuscationTechniques: true
+          };
+        } else if (resultValue === 'suspicious') {
+          details = {
+            riskScore: Math.floor(Math.random() * 30) + 50,
+            involvedWallets: Math.floor(Math.random() * 3) + 2,
+            flaggedWallets: 1,
+            transactionDate: '2023-05-17',
+            largeValueTransfer: Math.random() > 0.5,
+            obfuscationTechniques: false
+          };
+        } else {
+          details = {
+            riskScore: Math.floor(Math.random() * 49) + 1,
+            involvedWallets: 2,
+            flaggedWallets: 0,
+            transactionDate: '2024-01-28',
+            largeValueTransfer: false,
+            obfuscationTechniques: false
+          };
+        }
+      }
+      
+      setResult(resultValue);
+      setDetailedData(details);
       setIsLoading(false);
     }, 2500);
     
@@ -73,12 +168,179 @@ const Analysis = () => {
     }
   };
   
+  const renderRiskScoreGauge = (score: number) => {
+    let bgColor = 'bg-gradient-to-r from-green-500 to-green-300';
+    if (score > 50) bgColor = 'bg-gradient-to-r from-yellow-500 to-yellow-300';
+    if (score > 80) bgColor = 'bg-gradient-to-r from-red-600 to-red-400';
+    
+    return (
+      <div className="mt-6">
+        <h4 className="text-lg font-medium text-gray-800">Risk Score</h4>
+        <div className="relative h-6 bg-gray-200 rounded-full mt-2 overflow-hidden">
+          <div 
+            className={`absolute top-0 left-0 h-full ${bgColor} rounded-full transition-all duration-700 ease-in-out`} 
+            style={{ width: `${score}%` }}
+          ></div>
+          <div className="absolute inset-0 flex items-center justify-center text-sm font-semibold">
+            {score}/100
+          </div>
+        </div>
+      </div>
+    );
+  };
+  
+  const renderWalletDetails = () => {
+    if (!detailedData) return null;
+    
+    return (
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6 animate-fade-in">
+        <div className="bg-white rounded-lg p-6 shadow-md">
+          <div className="flex items-center mb-4">
+            <Activity className="h-5 w-5 text-unchained-navy mr-2" />
+            <h3 className="text-lg font-medium">Transaction Activity</h3>
+          </div>
+          <div className="grid grid-cols-2 gap-4">
+            <div className="p-3 bg-gray-50 rounded-lg">
+              <p className="text-sm text-gray-500">Total Transactions</p>
+              <p className="text-2xl font-semibold">{detailedData.transactionCount}</p>
+            </div>
+            <div className="p-3 bg-gray-50 rounded-lg">
+              <p className="text-sm text-gray-500">Flagged Transactions</p>
+              <p className="text-2xl font-semibold text-red-500">{detailedData.flaggedTransactions}</p>
+            </div>
+            <div className="p-3 bg-gray-50 rounded-lg">
+              <p className="text-sm text-gray-500">First Seen</p>
+              <p className="text-lg font-semibold">{detailedData.firstSeen}</p>
+            </div>
+            <div className="p-3 bg-gray-50 rounded-lg">
+              <p className="text-sm text-gray-500">Risk Level</p>
+              <p className={`text-lg font-semibold ${
+                result === 'high-risk' ? 'text-red-600' : 
+                result === 'suspicious' ? 'text-yellow-600' : 'text-green-600'
+              }`}>
+                {result === 'high-risk' ? 'High' : 
+                 result === 'suspicious' ? 'Medium' : 'Low'}
+              </p>
+            </div>
+          </div>
+        </div>
+        
+        <div className="bg-white rounded-lg p-6 shadow-md">
+          <div className="flex items-center mb-4">
+            <Shield className="h-5 w-5 text-unchained-navy mr-2" />
+            <h3 className="text-lg font-medium">Risk Indicators</h3>
+          </div>
+          <ul className="space-y-2">
+            <li className="flex items-center">
+              {detailedData.associatedWithPhishing ? 
+                <CircleX className="h-4 w-4 text-red-500 mr-2" /> : 
+                <CircleCheck className="h-4 w-4 text-green-500 mr-2" />
+              }
+              <span>Association with phishing</span>
+            </li>
+            <li className="flex items-center">
+              {detailedData.connectedToSanctionedEntities ? 
+                <CircleX className="h-4 w-4 text-red-500 mr-2" /> : 
+                <CircleCheck className="h-4 w-4 text-green-500 mr-2" />
+              }
+              <span>Connection to sanctioned entities</span>
+            </li>
+            <li className="flex items-center">
+              {detailedData.mixerUsage ? 
+                <CircleX className="h-4 w-4 text-red-500 mr-2" /> : 
+                <CircleCheck className="h-4 w-4 text-green-500 mr-2" />
+              }
+              <span>Crypto mixer usage detected</span>
+            </li>
+            <li className="flex items-center">
+              {detailedData.fundsFromDarkMarkets ? 
+                <CircleX className="h-4 w-4 text-red-500 mr-2" /> : 
+                <CircleCheck className="h-4 w-4 text-green-500 mr-2" />
+              }
+              <span>Funds from dark markets</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    );
+  };
+
+  const renderTransactionDetails = () => {
+    if (!detailedData) return null;
+    
+    return (
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6 animate-fade-in">
+        <div className="bg-white rounded-lg p-6 shadow-md">
+          <div className="flex items-center mb-4">
+            <Wallet className="h-5 w-5 text-unchained-navy mr-2" />
+            <h3 className="text-lg font-medium">Transaction Info</h3>
+          </div>
+          <div className="grid grid-cols-2 gap-4">
+            <div className="p-3 bg-gray-50 rounded-lg">
+              <p className="text-sm text-gray-500">Involved Wallets</p>
+              <p className="text-2xl font-semibold">{detailedData.involvedWallets}</p>
+            </div>
+            <div className="p-3 bg-gray-50 rounded-lg">
+              <p className="text-sm text-gray-500">Flagged Wallets</p>
+              <p className="text-2xl font-semibold text-red-500">{detailedData.flaggedWallets}</p>
+            </div>
+            <div className="p-3 bg-gray-50 rounded-lg">
+              <p className="text-sm text-gray-500">Transaction Date</p>
+              <p className="text-lg font-semibold">{detailedData.transactionDate}</p>
+            </div>
+            <div className="p-3 bg-gray-50 rounded-lg">
+              <p className="text-sm text-gray-500">Risk Level</p>
+              <p className={`text-lg font-semibold ${
+                result === 'high-risk' ? 'text-red-600' : 
+                result === 'suspicious' ? 'text-yellow-600' : 'text-green-600'
+              }`}>
+                {result === 'high-risk' ? 'High' : 
+                 result === 'suspicious' ? 'Medium' : 'Low'}
+              </p>
+            </div>
+          </div>
+        </div>
+        
+        <div className="bg-white rounded-lg p-6 shadow-md">
+          <div className="flex items-center mb-4">
+            <Database className="h-5 w-5 text-unchained-navy mr-2" />
+            <h3 className="text-lg font-medium">Risk Indicators</h3>
+          </div>
+          <ul className="space-y-2">
+            <li className="flex items-center">
+              {detailedData.largeValueTransfer ? 
+                <CircleX className="h-4 w-4 text-red-500 mr-2" /> : 
+                <CircleCheck className="h-4 w-4 text-green-500 mr-2" />
+              }
+              <span>Large value transfer</span>
+            </li>
+            <li className="flex items-center">
+              {detailedData.obfuscationTechniques ? 
+                <CircleX className="h-4 w-4 text-red-500 mr-2" /> : 
+                <CircleCheck className="h-4 w-4 text-green-500 mr-2" />
+              }
+              <span>Obfuscation techniques detected</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    );
+  };
+  
   return (
     <div className="min-h-screen flex flex-col">
       <Header />
       <main className="flex-grow py-12 bg-unchained-cream">
         <div className="container mx-auto px-6">
-          <div className="max-w-3xl mx-auto bg-white rounded-xl shadow-lg p-8 animate-fade-in">
+          <Button 
+            onClick={() => navigate('/')} 
+            variant="outline"
+            className="mb-6 flex items-center"
+          >
+            <ArrowLeft className="mr-2 h-4 w-4" /> Back to Search
+          </Button>
+          
+          <div className="max-w-4xl mx-auto bg-white rounded-xl shadow-lg p-8 animate-fade-in">
             <h1 className="text-3xl font-bold text-unchained-navy mb-6">Analysis Results</h1>
             
             <div className="mb-6">
@@ -120,44 +382,18 @@ const Analysis = () => {
                     </div>
                   </div>
                   
-                  <div className="mt-4 pl-12">
-                    <h5 className="font-medium text-gray-800 mb-2">Risk Factors:</h5>
-                    <ul className="list-disc pl-5 text-gray-600">
-                      {result === 'safe' && (
-                        <>
-                          <li>Normal transaction patterns</li>
-                          <li>No connection to known malicious addresses</li>
-                          <li>Consistent with legitimate financial activity</li>
-                        </>
-                      )}
-                      
-                      {result === 'suspicious' && (
-                        <>
-                          <li>Unusual transaction frequency</li>
-                          <li>Connection to addresses with moderate risk scores</li>
-                          <li>Irregular value transfers</li>
-                        </>
-                      )}
-                      
-                      {result === 'high-risk' && (
-                        <>
-                          <li>Connected to known scam addresses</li>
-                          <li>Suspicious fund flows consistent with money laundering</li>
-                          <li>Multiple high-risk markers detected</li>
-                          <li>Flagged by multiple data providers</li>
-                        </>
-                      )}
-                    </ul>
+                  {detailedData && renderRiskScoreGauge(detailedData.riskScore)}
+                  
+                  {searchType === 'wallet' ? renderWalletDetails() : renderTransactionDetails()}
+                  
+                  <div className="mt-8">
+                    <Button 
+                      onClick={() => navigate('/')} 
+                      className="bg-unchained-navy text-white px-6 py-3 rounded-lg hover:bg-opacity-90 transition-all"
+                    >
+                      Analyze Another Address
+                    </Button>
                   </div>
-                </div>
-                
-                <div className="mt-8">
-                  <button 
-                    onClick={() => navigate('/')} 
-                    className="bg-unchained-navy text-white px-6 py-3 rounded-lg hover:bg-opacity-90 transition-all"
-                  >
-                    Analyze Another Address
-                  </button>
                 </div>
               </div>
             )}

@@ -1,8 +1,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { Database, Menu, X } from 'lucide-react';
-import { Button } from '@/components/ui/button';
+import { Menu, X } from 'lucide-react';
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -31,9 +30,9 @@ const Header = () => {
         <Link to="/" className="flex items-center gap-2 group">
           <div className="flex items-center">
             <img 
-              src="/lovable-uploads/d1aa872c-3b36-485d-85df-457a0c194e20.png" 
+              src="/lovable-uploads/ed165f8a-aa3b-432d-aec7-55877f99acc5.png" 
               alt="UnChained Logo" 
-              className="h-8 w-8 transition-transform duration-300 group-hover:rotate-12"
+              className="h-10 w-10 transition-transform duration-300 group-hover:rotate-12"
             />
             <span className="text-2xl font-bold tracking-tight text-white ml-2">UnChained</span>
           </div>
@@ -53,14 +52,6 @@ const Header = () => {
           <a href="/#features" className="text-white hover:text-gray-300 transition-colors">Features</a>
           <a href="/#how-it-works" className="text-white hover:text-gray-300 transition-colors">How It Works</a>
           <a href="/#search" className="text-white hover:text-gray-300 transition-colors">Search</a>
-          <a href="/#about" className="text-white hover:text-gray-300 transition-colors">About</a>
-        </div>
-        
-        <div className="hidden md:flex items-center gap-4">
-          <Button variant="outline" className="text-white border-white hover:bg-white hover:text-unchained-navy">
-            <Database className="mr-2 h-4 w-4" />
-            API Access
-          </Button>
         </div>
 
         {/* Mobile Navigation */}
@@ -70,11 +61,6 @@ const Header = () => {
               <a href="/#features" className="text-white py-2 hover:bg-blue-800 px-4 rounded" onClick={() => setIsMenuOpen(false)}>Features</a>
               <a href="/#how-it-works" className="text-white py-2 hover:bg-blue-800 px-4 rounded" onClick={() => setIsMenuOpen(false)}>How It Works</a>
               <a href="/#search" className="text-white py-2 hover:bg-blue-800 px-4 rounded" onClick={() => setIsMenuOpen(false)}>Search</a>
-              <a href="/#about" className="text-white py-2 hover:bg-blue-800 px-4 rounded" onClick={() => setIsMenuOpen(false)}>About</a>
-              <Button variant="outline" className="text-white border-white hover:bg-white hover:text-unchained-navy mt-2">
-                <Database className="mr-2 h-4 w-4" />
-                API Access
-              </Button>
             </div>
           </div>
         )}

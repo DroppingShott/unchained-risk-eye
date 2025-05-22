@@ -6,27 +6,21 @@ const Footer = () => {
   return (
     <footer className="bg-unchained-navy text-white">
       <div className="container mx-auto px-6 py-12">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           <div className="md:col-span-1">
             <div className="flex items-center mb-4">
-              <Shield className="h-6 w-6 mr-2" />
+              <img 
+                src="/lovable-uploads/ed165f8a-aa3b-432d-aec7-55877f99acc5.png" 
+                alt="UnChained Logo" 
+                className="h-8 w-8 mr-2"
+              />
               <span className="text-xl font-bold">UnChained</span>
             </div>
             <p className="text-gray-300 mb-4">
               Advanced blockchain monitoring and risk assessment framework.
             </p>
           </div>
-          
-          <div>
-            <h3 className="text-lg font-semibold mb-4">Product</h3>
-            <ul className="space-y-2">
-              <li><a href="#" className="text-gray-300 hover:text-white transition-colors">Features</a></li>
-              <li><a href="#" className="text-gray-300 hover:text-white transition-colors">API</a></li>
-              <li><a href="#" className="text-gray-300 hover:text-white transition-colors">Pricing</a></li>
-              <li><a href="#" className="text-gray-300 hover:text-white transition-colors">Documentation</a></li>
-            </ul>
-          </div>
-          
+                    
           <div>
             <h3 className="text-lg font-semibold mb-4">Company</h3>
             <ul className="space-y-2">
