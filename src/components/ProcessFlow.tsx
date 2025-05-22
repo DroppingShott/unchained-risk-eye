@@ -190,10 +190,24 @@ const ProcessFlow = () => {
         </div>
       </div>
       
-      {/* Add some CSS for the flow nodes */}
-      <style jsx="true">{`
+      {/* Add CSS for the flow nodes using standard CSS-in-JS approach */}
+      <style>
+        {`
         .flow-node {
-          @apply relative pt-8 pb-4 px-4 rounded-lg border bg-white text-center min-h-[120px] flex flex-col items-center justify-center;
+          position: relative;
+          padding-top: 2rem;
+          padding-bottom: 1rem;
+          padding-left: 1rem;
+          padding-right: 1rem;
+          border-radius: 0.5rem;
+          border-width: 1px;
+          background-color: white;
+          text-align: center;
+          min-height: 120px;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
         }
         .flow-diagram .absolute.top-0.bottom-0.left-1\\/6 {
           left: 16.666%;
@@ -201,7 +215,8 @@ const ProcessFlow = () => {
         .flow-diagram .absolute.top-0.bottom-0.right-1\\/6 {
           right: 16.666%;
         }
-      `}</style>
+        `}
+      </style>
     </section>
   );
 };
