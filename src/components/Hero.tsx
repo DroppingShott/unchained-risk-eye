@@ -17,22 +17,24 @@ const Hero = () => {
       <div className="container mx-auto px-6 relative z-10">
         <div className="flex flex-col md:flex-row items-center">
           <div className="md:w-1/2 mb-10 md:mb-0">
-            <h1 className="text-4xl md:text-5xl font-bold leading-tight mb-6">
-              Blockchain Monitoring & Risk Assessment Framework
+            <h1 className="text-4xl md:text-5xl font-bold leading-tight mb-6 animate-fade-in">
+              Blockchain Criminal Detection Framework
             </h1>
-            <p className="text-xl mb-8 text-gray-200">
-              Advanced detection of suspicious blockchain activity through AI-powered analysis and human oversight.
+            <p className="text-xl mb-8 text-gray-200 animate-fade-in" style={{animationDelay: '0.2s'}}>
+              Identify and track criminal activity on the blockchain with our powerful AI-driven 
+              analysis system. Detect money laundering, scams, and other suspicious transactions.
             </p>
-            <div className="flex flex-col sm:flex-row gap-4">
+            <div className="flex flex-col sm:flex-row gap-4 animate-fade-in" style={{animationDelay: '0.4s'}}>
               <Button 
                 onClick={scrollToSearch}
-                className="bg-unchained-red hover:bg-red-700 text-white px-8 py-6 rounded-lg text-lg"
+                className="bg-unchained-red hover:bg-red-700 text-white px-8 py-6 rounded-lg text-lg transform transition-all duration-300 hover:scale-105"
               >
                 Start Analyzing
               </Button>
               <Button 
                 variant="outline" 
-                className="border-white text-white hover:bg-white hover:text-unchained-navy px-8 py-6 rounded-lg text-lg"
+                className="border-2 border-white text-white hover:bg-white hover:text-unchained-navy px-8 py-6 rounded-lg text-lg transform transition-all duration-300 hover:scale-105"
+                onClick={() => document.getElementById('about')?.scrollIntoView({ behavior: 'smooth' })}
               >
                 Learn More
               </Button>
@@ -42,32 +44,11 @@ const Hero = () => {
             <div className="relative w-64 h-64 md:w-80 md:h-80 animate-float">
               <div className="absolute inset-0 bg-unchained-navy rounded-full opacity-20 blur-xl"></div>
               <div className="absolute inset-0 flex items-center justify-center">
-                <svg 
-                  className="w-48 h-48 md:w-64 md:h-64" 
-                  viewBox="0 0 200 200"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path 
-                    fill="#FFFFFF" 
-                    d="M100,20 C120,20 140,30 150,50 C160,70 160,90 150,110 C140,130 120,140 100,140 C80,140 60,130 50,110 C40,90 40,70 50,50 C60,30 80,20 100,20 Z" 
-                  />
-                  <path 
-                    fill="none" 
-                    stroke="#E63946" 
-                    strokeWidth="8"
-                    strokeLinecap="round" 
-                    d="M100,45 L100,100 L130,115" 
-                  />
-                  <circle 
-                    cx="100" 
-                    cy="100" 
-                    r="80" 
-                    fill="none" 
-                    stroke="#FFFFFF" 
-                    strokeWidth="4" 
-                    strokeDasharray="10,5" 
-                  />
-                </svg>
+                <img 
+                  src="/lovable-uploads/d1aa872c-3b36-485d-85df-457a0c194e20.png" 
+                  alt="UnChained Logo" 
+                  className="w-48 h-48 md:w-64 md:h-64 object-contain animate-pulse-light"
+                />
               </div>
             </div>
           </div>

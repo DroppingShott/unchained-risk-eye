@@ -13,9 +13,15 @@ const Index = () => {
       <Header />
       <main className="flex-grow">
         <Hero />
-        <Features />
-        <ProcessFlow />
-        <SearchSection />
+        <div className="animate-fade-in" style={{animationDelay: '0.3s'}}>
+          <Features />
+        </div>
+        <div className="animate-fade-in" style={{animationDelay: '0.5s'}}>
+          <ProcessFlow />
+        </div>
+        <div className="animate-fade-in" style={{animationDelay: '0.7s'}}>
+          <SearchSection />
+        </div>
       </main>
       <Footer />
     </div>
